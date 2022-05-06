@@ -17,6 +17,7 @@ import Home from './components/Home/Home';
 import Shop from './components/Shops/Shop';
 import ChatBox from './components/ChatBot/ChatBox/ChatBox';
 import ProductDetails from './components/Product/ProductDetails';
+import SignIn from './components/Login/SignIn';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
       <NavbarNavite />
       <Navbar />
       <Routes>
+        <Route path='/SignIn' element = {<SignIn/>} />
         <Route path='/' element={<Home/>} />
         <Route path='/Shop' element={<Shop />} />
         <Route path='/Shop/Product/:id' element={<ProductDetails />} />

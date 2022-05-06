@@ -14,7 +14,7 @@ const Header = () => {
                     <div className="col-lg-6 col-md-5">
                         <div className="header__top__right">
                             <div className="header__top__links">
-                                <a href="#">Đăng nhập</a>
+                                <a href="/SignIn">Đăng nhập</a>
                                 <a href="#">Đăng ký</a>
                             </div>
                         </div>
