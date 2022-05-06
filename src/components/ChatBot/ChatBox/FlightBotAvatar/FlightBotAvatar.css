@@ -1,0 +1,7 @@
+.flightBotAvatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 12.5px;
+    background-image: url(./avata-bot.png);
+    background-size: 40px;
+}

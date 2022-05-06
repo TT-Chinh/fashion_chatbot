@@ -1,0 +1,8 @@
+
+.react-chatbot-kit-chat-bot-message-img {
+    display: inline-block;
+    margin-left: 50px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: rgba(68, 62, 62, 0.56) 1px 2px 10px 10px;
+}

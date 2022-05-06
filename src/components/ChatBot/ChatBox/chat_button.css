@@ -1,0 +1,33 @@
+.chatbox__button,
+.chatbox__button:focus,
+.chatbox__button:visited {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
+    width: 60px;
+    height: 60px;
+    bottom: 2rem;
+    right: 2rem;
+    border: none;
+    outline: none;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    box-shadow: rgba(0, 0, 0, 0.56) 1px 4px 70px 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.chatbox__button>img {
+    transition: all 0.3s;
+    width: 100%;
+    height: auto;
+}
+
+.chatbox__button:hover {
+    width: 65px;
+    height: 65px;
+}
