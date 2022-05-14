@@ -5,7 +5,7 @@ import Banner from "./Banner";
 import PreLoader from "../PreLoader/PreLoader";
 import Product from "../Product/Product";
 
-function Home() {
+function Home(props) {
 
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState([]);
@@ -22,8 +22,11 @@ function Home() {
         catch(er) {
             console.log(er.message);
         }
-        finally {            
-            setLoading(false);
+        finally {    
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000)        
+            
         }
     },[])
 
@@ -89,9 +92,10 @@ function Home() {
                     <div className="row product__filter">
                         {
                             products.map(p => (
-                                <div key={p.id} className="col-lg-4 col-md-6 col-sm-6">
+                                <div key={p.id} className="col-lg-3 col-md-4 col-sm-4">
                                     <Product
-                                        product={p}
+                                        product = {p}
+                                        addCart = {props.addCart}
                                     />
                                 </div>
                             ))

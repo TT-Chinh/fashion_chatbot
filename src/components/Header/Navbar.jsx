@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import $ from "jquery";
 import Header from "./Header";
 
-const Navbar = () => {
+function Navbar(props) {
+
+    const cart = props.cart ?? [];
+    const quantity = cart.length ?? 0;
+
+    const total = cart.reduce(getSum,0)
+    function getSum(sum, p) {
+        return sum + (p.price - Math.round(p.price * p.discount / 100 ));
+    }
 
     useEffect(() => {
         $('.navbar__menu__item').each(function() {
@@ -32,7 +40,7 @@ const Navbar = () => {
                                 <li className="navbar__menu__item">
                                     <a href="#">Xem thêm</a>
                                     <ul className="dropdown">
-                                        <li><Link to="/Cart">Giỏ hàng</Link></li>
+                                        <li><Link to="/Shop/Cart">Giỏ hàng</Link></li>
                                         <li><Link to="/Pay">Thanh toán</Link></li>
                                         <li><Link to="About">Thông tin cửa hàng</Link></li>
                                         <li><Link to="Contact">Liên hệ</Link></li>
@@ -43,8 +51,8 @@ const Navbar = () => {
                     </div>
                     <div className="col-lg-3 col-md-3">
                         <div className="header__nav__option">
-                            <a href="#" title="Giỏ hàng"><img width="25" height="30" src={process.env.PUBLIC_URL+"/icon/cart.png"}/><span>0</span></a>
-                            <div className="price">0đ</div>
+                            <Link to="/Shop/Cart" title="Giỏ hàng"><img width="25" height="30" src={process.env.PUBLIC_URL+"/icon/cart.png"}/><span>{quantity}</span></Link>
+                            <div className="price">{total+'.000đ'}</div>
                         </div>
                     </div>
                 </div >

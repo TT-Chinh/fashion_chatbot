@@ -5,7 +5,7 @@ import PreLoader from "../PreLoader/PreLoader";
 import { Link } from "react-router-dom";
 import Product from "../Product/Product";
 
-function Shop() {
+function Shop(props) {
 
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
@@ -14,10 +14,39 @@ function Shop() {
     const [categoryID, setCategoryID] = useState(null);
     const [brands, setBrands] = useState([]);
     const [brand, setBrand] = useState(null);
-    const [start, setStart] = useState(0);
-    const [end, setEnd] = useState(11);
     const [seeMore, setSeeMore] = useState(true);
     const [driect, setDriect] = useState(null);
+
+    function getProducts(start, end) {
+        try {
+            axios.post(
+            `https://localhost:44316/api/Product/GetAllProduct`,
+            {
+                categoryID: categoryID,
+                brand: brand,
+                search: search,
+                start: start,
+                end: end,
+                driect: driect
+            })
+            .then(response  => {
+                if(start == 0){
+                    setSeeMore(response.data.length >= end);
+                    setProducts(response.data)
+                }else{
+                    setSeeMore(products.length + response.data.length >= end);
+                    setProducts([...products, ...response.data]);
+                }
+            })
+        } catch (error) {
+            console.log(error.message);
+        }
+        finally {
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000) 
+        }
+    }
 
     useEffect(() => {
         try{
@@ -37,39 +66,11 @@ function Shop() {
         }
         catch(er) {
             console.log(er.message);
-            setSeeMore(false);
         }
     }, []);
 
     useEffect(() => {
-        try {            
-            axios.post(
-                `https://localhost:44316/api/Product/GetAllProduct`,
-                {
-                    categoryID: categoryID,
-                    brand: brand,
-                    search: search,
-                    start: start,
-                    end: end,
-                    driect: driect
-                }
-              )
-              .then(response  => {
-                setProducts(response.data);
-                // setStart(products.length);
-                if(products.length < end){
-                    setSeeMore(false);
-                } else{
-                    setSeeMore(true);
-                    // setEnd(products.length+6);
-                }
-              })
-        } catch (error) {
-            console.log(error.message);
-        }
-        finally {            
-            setLoading(false);
-        }
+        getProducts(0,11);
     }, [search,brand,driect,categoryID]);
 
     useEffect(() => {
@@ -78,16 +79,6 @@ function Shop() {
             $(this).css('background-image', 'url(' + bg + ')');
         });
     },[products]);
-
-    useEffect(() => {
-        $('.collapse').on('shown.bs.collapse', function () {
-            $(this).prev().addClass('active');
-        });
-    
-        $('.collapse').on('hidden.bs.collapse', function () {
-            $(this).prev().removeClass('active');
-        });
-    },[categories,brands])
 
     const handleCategory = (id) => {
         setCategoryID(id);
@@ -109,6 +100,11 @@ function Shop() {
 
     const handleBrand = (value) => {
         setBrand(value);
+    }
+
+    const handleSeeMore = () => {
+        const len = products.length;
+        getProducts(len, len+5);
     }
 
     return (
@@ -148,19 +144,19 @@ function Shop() {
                                     <div className="accordion" id="accordionExample">
                                         <div className="card">
                                             <div className="card-heading">
-                                                <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                                <a data-toggle="collapse" data-target="#collapseOne">DANH MỤC</a>
                                             </div>
                                             <div id="collapseOne" className="collapse show" data-parent="#accordionExample">
                                                 <div className="card-body">
                                                     <div className="shop__sidebar__categories">
                                                         <ul className="nice-scroll">
                                                             <li onClick={() => handleCategory(null)}>
-                                                                <a href="#">Tất cả</a>
+                                                                <a>Tất cả</a>
                                                             </li>
                                                             {
                                                                 categories.map(c => (
                                                                     <li key={c.id} onClick = {() => handleCategory(c.id)} >
-                                                                        <a href="#">
+                                                                        <a>
                                                                             {c.name}
                                                                         </a>
                                                                     </li>
@@ -173,20 +169,20 @@ function Shop() {
                                         </div>
                                         <div className="card">
                                             <div className="card-heading">
-                                                <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
+                                                <a data-toggle="collapse" data-target="#collapseTwo">THƯƠNG HIỆU</a>
                                             </div>
                                             <div id="collapseTwo" className="collapse show" data-parent="#accordionExample">
                                                 <div className="card-body">
                                                     <div className="shop__sidebar__brand">
                                                         <ul>
                                                             <li onClick={() => handleBrand(null)}>
-                                                                <a href="#">Tất cả</a>
+                                                                <a>Tất cả</a>
                                                             </li>
                                                             {
                                                                 brands.map(b => (
                                                                     <li key={b}
                                                                     onClick={() => handleBrand(b)}>
-                                                                        <a href="#">
+                                                                        <a>
                                                                             {b}
                                                                         </a>
                                                                     </li>
@@ -228,6 +224,7 @@ function Shop() {
                                         products.map(p => (
                                             <div key={p.id} className="col-lg-4 col-md-6 col-sm-6">
                                                 <Product
+                                                    addCart={props.addCart}
                                                     product={p}
                                                 />
                                             </div>
@@ -244,7 +241,8 @@ function Shop() {
                                 seeMore > 0 &&
                                 <div div className="row mt-4">
                                     <div className="col-lg-12 px-5">
-                                        <button className="btn btn-outline-dark font-weight-bold w-100 f-2">XEM THÊM</button>
+                                        <button className="btn btn-outline-dark font-weight-bold w-100 f-2"
+                                        onClick={() => {handleSeeMore()}}>XEM THÊM</button>
                                     </div>
                                 </div>
                             }

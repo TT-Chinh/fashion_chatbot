@@ -119,7 +119,7 @@ function ProductDetails() {
                                                 />
                                             </div>
                                         </div>
-                                        <a href="#" className="primary-btn">add to cart</a>
+                                        <a href="#" className="primary-btn">Thêm giỏ hàng</a>
                                     </div>
                                     <div className="product__details__last__option">
                                         <ul>

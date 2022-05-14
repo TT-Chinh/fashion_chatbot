@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 const Header = () => {
+    
+    const user = JSON.parse(localStorage.getItem('user'))
 
     return (
         <div className="header__top">
@@ -13,10 +16,17 @@ const Header = () => {
                     </div>
                     <div className="col-lg-6 col-md-5">
                         <div className="header__top__right">
-                            <div className="header__top__links">
-                                <a href="/SignIn">Đăng nhập</a>
-                                <a href="#">Đăng ký</a>
-                            </div>
+                            {
+                                user ?? 
+                                <div className="header__top__links">
+                                    <Link to="/SignIn">Đăng nhập</Link>
+                                    <Link to="/SignUp">Đăng ký</Link>
+                                </div>
+                            }
+                            {
+                                user &&
+                                <div className="header__top__user">{user.fullName}</div>
+                            }
                         </div>
                     </div>
                 </div>

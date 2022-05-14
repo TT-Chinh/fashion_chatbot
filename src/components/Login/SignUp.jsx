@@ -6,7 +6,7 @@ import pass from "../../images/pass.png";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const recaptchaRef = React.createRef();
-const SignIn = () => {
+const SignUp = () => {
   return (
     <div className="login-form">
      <div className="sub-main">
@@ -19,7 +19,15 @@ const SignIn = () => {
          <div>          
            <div className='text-input'>
              <img src={email} alt="Account" className="icon-input"/>
-             <input type="text" placeholder="Số điện thoại/ Email" className="login-input"/>
+             <input type="text" placeholder="Họ tên" className="login-input"/>
+           </div>
+           <div className="text-input second-input">
+             <img src={pass} alt="Password" className="icon-input"/>
+             <input type="text" placeholder="Số điện thoại" className="login-input"/>
+           </div>
+           <div className="text-input second-input">
+             <img src={pass} alt="Password" className="icon-input"/>
+             <input type="text" placeholder="Email" className="login-input"/>
            </div>
            <div className="text-input second-input">
              <img src={pass} alt="Password" className="icon-input"/>
@@ -32,13 +40,8 @@ const SignIn = () => {
             />
            </div>
           <div className="login-button">
-          <button>Đăng nhập</button>
+          <button>Đăng ký</button>
           </div>
-           
-            <p className="link">
-              <a href="#">Quên mật khẩu ?</a> <span className='text-primary'>hoặc</span> <a href="#">Đăng ký</a>
-            </p>          
- 
          </div>
        </div>
      </div>
@@ -46,4 +49,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default SignUp
